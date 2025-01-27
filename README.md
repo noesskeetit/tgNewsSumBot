@@ -1,43 +1,41 @@
 # Telegram Channel Summarizer Bot
 
-This bot aggregates content from specified Telegram channels and provides summaries using the LLAMA language model.
+Небольшое микросервисное приложение, позволяющее получать краткие сводки (summary) последних сообщений из Telegram-каналов по запросу в боте.
 
-## Features
+---
 
-- Add/remove Telegram channels to monitor
-- List monitored channels
-- Generate summaries of channel content
-- Uses LLAMA model for text summarization
-- Caches summaries for 24 hours
+## Основные возможности
 
-## Setup
+- **Добавление/удаление** каналов к личному списку отслеживаемых (`/add_channel`, `/remove_channel`).
+- **Просмотр** списка отслеживаемых каналов (`/list_channels`).
+- **Получение суммаризации** последних сообщений по всем отслеживаемым каналам (`/get_summary`).
+- **Кэширование** результатов суммаризации (Redis).
+- **Хранение** списка каналов в базе данных (Postgres).
 
-1. Create a new bot on Telegram using [@BotFather](https://t.me/botfather)
-2. Get your bot token
-3. Create a `.env` file and add your bot token:
-   ```
-   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-   ```
-4. Install dependencies:
-   ```
-   npm install
-   ```
-5. Start the bot:
-   ```
-   npm run dev
-   ```
+---
 
-## Commands
+## Технологии и компоненты
 
-- `/start` - Initialize the bot
-- `/add_channel <channel_link>` - Add a channel to monitor
-- `/list_channels` - List all monitored channels
-- `/remove_channel <channel_link>` - Remove a channel
-- `/get_summary` - Get today's summary of all channels
+- **Python Telegram Bot** и **Telethon** для взаимодействия с Telegram.
+- **FastAPI** + **Transformers** (BART) для микросервиса суммаризации.
+- **Postgres** для хранения данных о каналах.
+- **Redis** для кэширования суммаризаций.
+- **Docker Compose** для сборки и запуска всех сервисов.
 
-## Technical Details
+---
 
-- Built with Grammy (Telegram Bot Framework)
-- Uses @xenova/transformers for LLAMA model integration
-- Implements caching using node-cache
-- Written in TypeScript
+## Структура проекта
+
+```bash
+.
+├── bot/
+│   ├── bot.py             # Исходный код Telegram-бота
+│   ├── Dockerfile         # Dockerfile для бота
+│   └── requirements.txt   # Python-зависимости для бота
+├── summarizer/
+│   ├── summarizer.py      # Код FastAPI-сервиса для суммаризации
+│   ├── Dockerfile         # Dockerfile для summarizer
+│   └── requirements.txt   # Python-зависимости для summarizer
+├── docker-compose.yml      # docker-compose для запуска проекта
+├── .env                    # Файл с переменными окружения (не класть в публичный репозиторий!)
+└── README.md               # Текущее описание

@@ -1,0 +1,6 @@
+python-telegram-bot
+transformers
+python-dotenv
+torch
+telethon
+aiofiles
